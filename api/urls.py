@@ -25,6 +25,7 @@ from users.api.router import router_user
 from vehicles.api.router import router_vehicles
 from routes.api.router import router_routes, router_route_users
 from ratings.api.router import router_ratings
+from universities.api.router import router_universities, router_universities_colors
 
 
 schema_view = get_schema_view(
@@ -51,4 +52,6 @@ urlpatterns = [
     path('api/routes/', include(router_routes.urls)),
     path('api/route_users/', include(router_route_users.urls)),
     path('api/ratings/', include(router_ratings.urls)),
+    path('api/universities/', include(router_universities.urls)),
+    path('api/universities_colors/', include(router_universities_colors.urls)),
 ]

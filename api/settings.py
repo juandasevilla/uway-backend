@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'vehicles',
     'routes',
     'ratings',
+    'universities',
 ]
 
 MIDDLEWARE = [
