@@ -16,7 +16,7 @@ class User(AbstractUser):
     institutional_id_photo = models.ImageField(upload_to='institutional_carnet_photos/', blank=True, null=True)
     identification_document = models.CharField(max_length=20, unique=True)
     university = models.ForeignKey(University, on_delete=models.SET_NULL, blank=True, null=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
