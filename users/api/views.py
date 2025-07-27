@@ -3,11 +3,24 @@ from users.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from users.api.serializers import LoginSerializer, RegisterSerializer, RoleSerializer
 from datetime import datetime
 from roles.models import Role
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        user = User.objects.get(email=request.data['email'])
+        user_data = LoginSerializer(user).data
+
+        response.data.update({'user': user_data})
+        return response
 
 class UserApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -86,3 +99,13 @@ def roles_all(request):
     roles = Role.objects.all()
     serializer = RoleSerializer(roles, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_info_user(request):
+    user = request.user
+    serializer = LoginSerializer(user)
+    response_data = serializer.data
+
+    return Response(response_data)
