@@ -3,6 +3,7 @@ from users.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from users.api.serializers import LoginSerializer, RegisterSerializer
 from datetime import datetime
@@ -62,3 +63,18 @@ class UserApiViewSet(ModelViewSet):
         }
         return Response(data=data)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def users_waiting_for_activate(request, id_university):
+    users = User.objects.filter(is_active=False, deleted_at__isnull=True, university_id=id_university)
+    serializer = LoginSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def users_are_activate(request, id_university):
+    users = User.objects.filter(is_active=True, deleted_at__isnull=True, university_id=id_university)
+    serializer = LoginSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
