@@ -5,9 +5,9 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from users.api.serializers import LoginSerializer, RegisterSerializer
+from users.api.serializers import LoginSerializer, RegisterSerializer, RoleSerializer
 from datetime import datetime
-
+from roles.models import Role
 
 class UserApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -77,4 +77,12 @@ def users_waiting_for_activate(request, id_university):
 def users_are_activate(request, id_university):
     users = User.objects.filter(is_active=True, deleted_at__isnull=True, university_id=id_university)
     serializer = LoginSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def roles_all(request):
+    roles = Role.objects.all()
+    serializer = RoleSerializer(roles, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)

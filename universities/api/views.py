@@ -22,7 +22,7 @@ def universities_waiting_for_activate(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def universities_are_activate(request):
     universities = University.objects.filter(is_active=True, deleted_at__isnull=True)
     serializer = UniversitySerializer(universities, many=True)
