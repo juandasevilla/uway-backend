@@ -13,6 +13,22 @@ class UniversitiesApiViewSet(ModelViewSet):
     queryset = University.objects.filter(deleted_at__isnull=True)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def universities_waiting_for_activate(request):
+    universities = University.objects.filter(is_active=False, deleted_at__isnull=True)
+    serializer = UniversitySerializer(universities, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def universities_are_activate(request):
+    universities = University.objects.filter(is_active=True, deleted_at__isnull=True)
+    serializer = UniversitySerializer(universities, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class UniversitiesColorsApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = UniversityColorsSerializer

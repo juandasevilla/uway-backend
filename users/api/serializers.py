@@ -17,6 +17,13 @@ class LoginSerializer(ModelSerializer):
             'is_active',
             'email',
             'last_login',
+            'address',
+            'phone_number',
+            'institutional_email',
+            'student_code',
+            'identification_document',
+            'university',
+            'role',
         ]
 
 
@@ -33,6 +40,15 @@ class RegisterSerializer(ModelSerializer):
             'is_superuser',
             'is_active',
             'email',
+            'address',
+            'phone_number',
+            'institutional_email',
+            'student_code',
+            'academic_register_photo',
+            'institutional_id_photo',
+            'identification_document',
+            'university',
+            'role',
         ]
 
     def create(self, validated_data):
