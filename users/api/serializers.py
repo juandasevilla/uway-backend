@@ -2,6 +2,12 @@ from  rest_framework import serializers
 from users.models import User
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth import authenticate
+from roles.models import Role
+
+class RoleSerializer(ModelSerializer):
+    class Meta:
+        model = Role
+        fields = ['id', 'name', 'description']
 
 
 class LoginSerializer(ModelSerializer):

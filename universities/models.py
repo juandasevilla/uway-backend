@@ -7,8 +7,6 @@ class University(models.Model):
     address = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='universities/logos/', blank=True, null=True)
     is_active = models.BooleanField(default=False)
-    email = models.EmailField(max_length=255, unique=True)
-    password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
