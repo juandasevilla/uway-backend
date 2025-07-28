@@ -17,6 +17,9 @@ class User(AbstractUser):
     identification_document = models.CharField(max_length=20, unique=True)
     university = models.ForeignKey(University, on_delete=models.SET_NULL, blank=True, null=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, default=None)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

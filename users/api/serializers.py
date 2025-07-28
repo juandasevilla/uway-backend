@@ -30,6 +30,9 @@ class LoginSerializer(ModelSerializer):
             'identification_document',
             'university',
             'role',
+            'created_at',
+            'updated_at',
+            'deleted_at',
         ]
 
 

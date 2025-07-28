@@ -16,6 +16,6 @@ class VehiclesApiViewSet(ModelViewSet):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def vehicle_by_user(request, id_user):
-    vehicles = Vehicle.objects.filter(user=id_user, deleted_at__isnull=True)
+    vehicles = Vehicle.objects.filter(driver=id_user, deleted_at__isnull=True)
     serializer = VehicleSerializer(vehicles, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)

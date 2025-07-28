@@ -94,6 +94,14 @@ def users_are_activate(request, id_university):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def users_by_university(request, id_university):
+    users = User.objects.filter(deleted_at__isnull=True, university_id=id_university)
+    serializer = LoginSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 @permission_classes([AllowAny])
 def roles_all(request):
     roles = Role.objects.all()
